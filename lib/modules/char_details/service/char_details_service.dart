@@ -3,10 +3,9 @@ import 'package:http/http.dart' as http;
 import '../model/char_details_model.dart';
 
 class CharDetailsService {
-
-  Future<CharDetailsModel> fetchDetailsChar() async {
+  Future<CharDetailsModel> fetchDetailsChar(int characterId) async {
     final charDetails = await http.get(
-        Uri.parse('https://rickandmortyapi.com/api/character'));
+        Uri.parse('https://rickandmortyapi.com/api/character/$characterId'));
     if (charDetails.statusCode == 200) {
       return CharDetailsModel.fromJson(
           jsonDecode(charDetails.body) as Map<String, dynamic>);
@@ -14,7 +13,4 @@ class CharDetailsService {
       return throw Exception('Failed to load  character');
     }
   }
-
-
-
 }

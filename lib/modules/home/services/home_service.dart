@@ -4,29 +4,29 @@ import 'package:http/http.dart' as http;
 import 'package:rick_and_morty/modules/home/model/character_model.dart';
 
 class HomeService {
+  final String baseUrl = 'https://rickandmortyapi.com/api/character';
 
-  Future<CharactersDataModel> fetchCharData(int? page) async {
-      final charData =
-        await http.get(Uri.parse('https://rickandmortyapi.com/api/character/?page=$page'));
-    if(charData.statusCode ==200){
-      return CharactersDataModel.fromJson(jsonDecode(charData.body) as Map<String,dynamic>);
+  Future<CharactersDataModel> fetchCharData(int? page,
+      {String? name,
+      String? status,
+      String? species,
+      String? type,
+      String? gender}) async {
+    final Map<String, dynamic> queryParams = {
+      'page': page.toString(),
+      'name': name,
+      'status': status,
+      'species': species,
+      'type': type,
+      'gender': gender,
+    };
+    final uri = Uri.parse(baseUrl).replace(queryParameters: queryParams);
+    final response = await http.get(uri);
 
-    }
-    else{
-      return throw Exception('Failed to load  character');
+    if (response.statusCode == 200) {
+      return CharactersDataModel.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Failed to load characters');
     }
   }
-
-  Future<CharactersDataModel> searchChar(String searchedChar) async {
-      final filteredChar =
-        await http.get(Uri.parse('https://rickandmortyapi.com/api/character/?name=$searchedChar'));
-    if(filteredChar.statusCode ==200){
-      return CharactersDataModel.fromJson(jsonDecode(filteredChar.body) as Map<String,dynamic>);
-
-    }
-    else{
-      return throw Exception('Failed to load  character');
-    }
-  }
-
 }

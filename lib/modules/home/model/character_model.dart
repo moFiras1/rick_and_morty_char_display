@@ -5,11 +5,11 @@ class CharactersDataModel {
   CharactersDataModel({this.info, this.results});
 
   CharactersDataModel.fromJson(Map<String, dynamic> json) {
-    info = json['info'] != null ? new Info.fromJson(json['info']) : null;
+    info = json['info'] != null ? Info.fromJson(json['info']) : null;
     if (json['results'] != null) {
       results = <Results>[];
       json['results'].forEach((v) {
-        results!.add(new Results.fromJson(v));
+        results!.add(Results.fromJson(v));
       });
     }
   }
@@ -21,7 +21,7 @@ class Info {
   int? pages;
 
 
-  Info({this.count, this.pages});
+  Info({this.count, this.pages,});
 
   Info.fromJson(Map<String, dynamic> json) {
     count = json['count'];
@@ -39,25 +39,38 @@ class Results {
   String? gender;
   String? image;
 
-  Results(
-      {this.id,
-        this.name,
-        this.status,
-        this.species,
-        this.type,
-        this.gender,
-        this.image,
-       });
+  Results({
+    this.id,
+    this.name,
+    this.status,
+    this.species,
+    this.type,
+    this.gender,
+    this.image,
+  });
 
-  Results.fromJson(Map<String, dynamic> json) {
-    id = json['id'];
-    name = json['name'];
-    status = json['status'];
-    species = json['species'];
-    type = json['type'];
-    gender = json['gender'];
-    image = json['image'];
+  factory Results.fromJson(Map<String, dynamic> json) {
+    return Results(
+      id: json['id'],
+      name: json['name'],
+      status: json['status'],
+      species: json['species'],
+      type: json['type'],
+      gender: json['gender'],
+      image: json['image'],
+    );
   }
 
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'status': status,
+      'species': species,
+      'type': type,
+      'gender': gender,
+      'image': image,
+    };
+  }
 }
 

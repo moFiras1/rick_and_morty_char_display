@@ -15,12 +15,12 @@ class CharDetailsController with ChangeNotifier {
 
   String? get errorMessage => _errorMessage;
 
-  Future<void> fetchCharDetails( ) async {
+  Future<void> fetchCharDetails(int characterId) async {
     _isLoading = true;
     _errorMessage = null;
     notifyListeners();
     try {
-      _charDetailsModel = await myService.fetchDetailsChar();
+      _charDetailsModel = await myService.fetchDetailsChar(characterId);
     } catch (e) {
       _errorMessage = e.toString();
     }

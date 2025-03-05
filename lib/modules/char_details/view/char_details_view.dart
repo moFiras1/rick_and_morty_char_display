@@ -24,7 +24,7 @@ class _CharDetailsScreenState extends State<CharDetailsScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       Provider.of<CharDetailsController>(context, listen: false)
-          .fetchCharDetails();
+          .fetchCharDetails(widget.characterId);
     });
   }
 
@@ -42,7 +42,7 @@ class _CharDetailsScreenState extends State<CharDetailsScreen> {
                   Row(
                     children: [
                       Text(
-                        'Characters',
+                        'Character Details',
                         style: TextStyle(
                           fontSize: 22.sp,
                           color: Colors.white,
@@ -53,7 +53,7 @@ class _CharDetailsScreenState extends State<CharDetailsScreen> {
                       Container(
                         color: const Color(0xffEBFF6E),
                         height: 2.h,
-                        width: 135.w,
+                        width: 80.w,
                       ),
                     ],
                   ),

@@ -53,12 +53,12 @@ class CharCardDetails extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                   fontSize: 25.sp,
                 ),
-              ),//// char nameme
+              ),//// char name
               SizedBox(height: 30.h),
               Text(
                 "Status:$status",
                 style: TextStyle(
-                  color: Color(0xffEBFF6E),
+                  color: const Color(0xffEBFF6E),
                   fontSize: 20.sp,
                 ),
               ), ///status

@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-
+import 'package:rick_and_morty/modules/home/controller/home_controller.dart';
 import '../../../../core/app_router.dart';
-import '../../../char_details/view/char_details_view.dart';
-import '../../controller/home_controller.dart';
 
 class CharacterCard extends StatelessWidget {
   final int id;
@@ -13,6 +11,7 @@ class CharacterCard extends StatelessWidget {
   final String species;
   final String gender;
   final String imageUrl;
+  final bool? isFav = false;
 
   const CharacterCard({
     super.key,
@@ -26,17 +25,18 @@ class CharacterCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return Stack(
       clipBehavior: Clip.none,
       alignment: Alignment.topCenter,
       children: [
         InkWell(
-          onTap: () => Navigator.pushNamed(context,Routes.characterDetailsRoute,
-              arguments: {
-            'characterId' : id,
-              },
-                  ),
+          onTap: () => Navigator.pushNamed(
+            context,
+            Routes.characterDetailsRoute,
+            arguments: {
+              'characterId': id,
+            },
+          ),
           child: Container(
             margin: EdgeInsets.only(top: 60.r),
             padding: EdgeInsets.symmetric(vertical: 80.h, horizontal: 32.w),
@@ -57,12 +57,12 @@ class CharacterCard extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                     fontSize: 25.sp,
                   ),
-                ), //// char nameme
+                ), //// char name
                 SizedBox(height: 30.h),
                 Text(
                   "Status:$status",
                   style: TextStyle(
-                    color: Color(0xffEBFF6E),
+                    color: const Color(0xffEBFF6E),
                     fontSize: 20.sp,
                   ),
                 ),
@@ -100,6 +100,26 @@ class CharacterCard extends StatelessWidget {
             backgroundImage: NetworkImage(imageUrl),
           ),
         ),
+        Positioned(
+            top: 85,
+            right: 40,
+            child: Consumer<HomeController>(
+              builder: (context, value, child) {
+                return IconButton(
+                    onPressed: () {
+                      value.favorite(id);
+
+                    },
+                    icon: Icon(
+                      Icons.favorite,
+                      size: 40,
+                      color: value.isFav(id)
+                          ?  Colors.red
+                          :const Color(0xff0F3A40),
+
+                    ));
+              },
+            )),
       ],
     );
   }
